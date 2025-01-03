@@ -1,0 +1,8 @@
+from tkinter import*
+class IMS:
+    def _init_(self,root):
+        pass
+
+root=Tk()
+obj=IMS(root)
+root.mainloop()
