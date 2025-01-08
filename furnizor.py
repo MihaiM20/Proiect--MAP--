@@ -97,6 +97,7 @@ def actualizeaza_furnizor(facturi, nume, contact, descriere, treeview):
     finally:
         cursor.close()
         conectare.close()
+
 def select_furnizor(event, treeview, facturi_entry, nume_entry, contact_entry, descriere_text):
     # Obține elementul selectat
     index = treeview.selection()
