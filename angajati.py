@@ -121,38 +121,6 @@ def clear_fields(id_entry,nume_entry,email_entry,gen_combobox,data_nastere_entry
     if check:
         angajati_treeview.selection_remove(angajati_treeview.selection())
 
-def adauga_angajat(id, nume, email, gen, data_nastere, contact, tip_angajare, educatie, program_lucru, adresa,
-                   data_angajare, salariu, tip_utilizator, parola):
-    if (
-        id == '' or nume == '' or email == '' or gen == 'Selecteaza gen' or contact == '' or tip_angajare == 'Selecteaza tip' or
-        educatie == 'Selecteaza educatie' or program_lucru == 'Selecteaza program' or adresa == '\n' or salariu == '' or
-        tip_utilizator == '' or parola == ''
-    ):
-        messagebox.showerror('Error', 'Toate spatiile trebuiesc completate!')
-    else:
-        cursor, conectare = conectare_bd()
-        if not cursor or not conectare:
-            return
-        cursor.execute('use sistem_inventar')
-        try:
-            cursor.execute('SELECT id FROM date_angajati WHERE id=%s',(id,))
-            if cursor.fetchone():
-                messagebox.showerror('Error','Id-ul deja exista!')
-                return
-            adresa=adresa.strip()
-            cursor.execute('INSERT INTO date_angajati VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (
-            id, nume, email, gen, data_nastere, contact, tip_angajare, educatie, program_lucru, adresa,
-            data_angajare, salariu, tip_utilizator, parola
-            ))
-            conectare.commit()
-            treeview_data()  # Reîmprospătăm datele în Treeview
-            messagebox.showinfo('Succes', 'Datele au fost introduse cu succes')
-        except pymysql.MySQLError as e:
-            messagebox.showerror('Eroare MySQL', f'A apărut o problemă cu introducerea datelor: {e}')
-        finally:
-            cursor.close()
-            conectare.close()
-
 
 def adauga_angajat(id, nume, email, gen, data_nastere, contact, tip_angajare, educatie, program_lucru, adresa,
                    data_angajare, salariu, tip_utilizator, parola):
@@ -511,3 +479,4 @@ def angajati_tab(window):
     create_db_tabel()
     clear_button.bind("<Enter>", on_enter)
     clear_button.bind("<Leave>", on_leave)
+    return angajati_frame
